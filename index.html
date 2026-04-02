@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>OptiBuild - BOQ + Feasibility</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet" />
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<div class="page-wrap">
+			<header class="top-meta container">
+				<p>OptiBuild</p>
+				<p>02/04/26</p>
+			</header>
+
+			<nav class="top-nav container card-shell">
+				<div>
+					<p class="logo">OPTIBUILD</p>
+					<p class="logo-sub">Residential BOQ and feasibility planning</p>
+				</div>
+				<div class="nav-links">
+					<a href="#calculator">Calculator</a>
+					<a href="#about">About</a>
+				</div>
+			</nav>
+
+			<section class="hero-grid container">
+				<article class="hero-main card-shell">
+					<p class="hero-kicker">OPTIBUILD</p>
+					<h1>Plan projects with clearer numbers.</h1>
+					<p class="hero-copy">
+						OptiBuild is a focused residential BOQ and feasibility page for quick project estimation, cost visibility, and practical decision-making before work begins.
+					</p>
+					<div class="hero-actions">
+						<a class="soft-btn" href="#calculator">Open Calculator</a>
+						<a class="soft-btn" href="#about">Learn More</a>
+					</div>
+				</article>
+
+				<aside class="hero-side card-shell">
+					<article class="feature-card">
+						<h3>Fast estimates</h3>
+						<p>Useful for early-stage planning and feasibility checks.</p>
+					</article>
+					<article class="feature-card">
+						<h3>Clear scope</h3>
+						<p>Designed to keep the layout simple and easy to review.</p>
+					</article>
+					<article class="feature-card">
+						<h3>Responsive layout</h3>
+						<p>Works cleanly across desktop and mobile screens.</p>
+					</article>
+				</aside>
+			</section>
+
+			<section id="calculator" class="calculator-shell container card-shell">
+				<div class="section-head">
+					<h2>BOQ &amp; Feasibility Calculator</h2>
+					<p>Analyze project cost, feasibility, scenarios, and editable BOQ rates.</p>
+				</div>
+
+				<div class="layout">
+					<section class="form-card">
+						<p class="muted">You can run aggressive scenarios. The tool will warn, not block.</p>
+
+						<div class="unit-switch" role="group" aria-label="Unit switch">
+							<button type="button" class="unit-btn active" data-unit="sqft">Sq Ft</button>
+							<button type="button" class="unit-btn" data-unit="sqm">Sq M</button>
+							<button type="button" class="unit-btn" data-unit="sqyd">Sq Yd</button>
+						</div>
+
+						<div class="tier-buttons" role="group" aria-label="Quality tier">
+							<button type="button" class="tier active" data-tier="C">Basic C</button>
+							<button type="button" class="tier" data-tier="B">Standard B</button>
+							<button type="button" class="tier" data-tier="A">Premium A</button>
+						</div>
+
+						<form id="projectForm">
+							<h3>Core Geometry</h3>
+							<label>
+								Plot Area (<span id="plotUnit">sq ft</span>)
+								<input type="number" name="plotArea" min="0" step="1" value="3000" />
+							</label>
+							<label>
+								Built-up Area BUA (<span id="buaUnit">sq ft</span>)
+								<input type="number" name="bua" min="0" step="1" value="9000" required />
+							</label>
+
+							<div class="grid-3">
+								<label>
+									Floors (G counted)
+									<input type="number" name="floors" min="1" max="30" value="6" />
+								</label>
+								<label>
+									Basements
+									<input type="number" name="basements" min="0" max="3" value="1" />
+								</label>
+								<label>
+									Flats / Floor
+									<input type="number" name="flatsPerFloor" min="0" max="20" value="4" />
+								</label>
+							</div>
+
+							<div class="grid-4">
+								<label>
+									Parking Slots
+									<input type="number" name="parkingSlots" min="0" step="1" value="20" />
+								</label>
+								<label>
+									BHK Type
+									<select name="bhkType">
+										<option value="1">1 BHK</option>
+										<option value="2" selected>2 BHK</option>
+										<option value="3">3 BHK</option>
+										<option value="4">4 BHK</option>
+										<option value="5">5 BHK</option>
+									</select>
+								</label>
+								<label>
+									Loading % (BUA to SBA)
+									<input type="number" name="loadingPct" min="10" max="60" step="1" value="30" />
+								</label>
+								<label>
+									Carpet % of BUA (for area stack)
+									<input type="number" name="carpetRatio" min="60" max="90" step="1" value="78" />
+								</label>
+							</div>
+
+							<h3>Mode</h3>
+							<div class="mode-switch">
+								<label><input type="radio" name="feasibilityMode" value="math" /> Math Mode</label>
+								<label><input type="radio" name="feasibilityMode" value="reality" checked /> Reality Mode</label>
+							</div>
+							<p class="muted mode-note">
+								In Reality Mode, ground floor is treated as parking/podium and sale units start from Floor 1.
+							</p>
+
+							<h3>Optional Smart Tools</h3>
+							<label class="toggle-row">
+								<input id="smartToggle" type="checkbox" />
+								Enable Presets &amp; Scenario Sliders
+							</label>
+							<div id="smartTools" class="smart-tools hidden">
+								<div class="preset-buttons">
+									<button type="button" class="preset-btn" data-preset="conservative">Conservative</button>
+									<button type="button" class="preset-btn" data-preset="balanced">Balanced</button>
+									<button type="button" class="preset-btn" data-preset="aggressive">Aggressive</button>
+								</div>
+
+								<div class="grid-3 slider-grid">
+									<label>
+										Sale Sensitivity
+										<input id="quickSaleFactor" type="range" min="80" max="120" step="1" value="100" />
+										<span id="quickSaleFactorValue" class="inline-value">100%</span>
+									</label>
+									<label>
+										Sold % Adjustment
+										<input id="quickSoldAdj" type="range" min="-20" max="20" step="1" value="0" />
+										<span id="quickSoldAdjValue" class="inline-value">+0%</span>
+									</label>
+									<label>
+										Escalation Adjustment
+										<input id="quickEscalationAdj" type="range" min="-5" max="10" step="0.5" value="0" />
+										<span id="quickEscalationAdjValue" class="inline-value">+0%</span>
+									</label>
+								</div>
+							</div>
+
+							<h3>Optional Advanced Timeline</h3>
+							<label class="toggle-row">
+								<input id="timelineToggle" name="advancedTimeline" type="checkbox" />
+								Enable Delay Simulation &amp; Cashflow Timeline
+							</label>
+							<div id="timelineTools" class="smart-tools hidden">
+								<div class="grid-3 slider-grid">
+									<label>
+										Approval / Launch Delay (months)
+										<input type="number" name="delayMonths" min="0" max="24" step="1" value="0" />
+									</label>
+									<label>
+										Sales Realization Window (months)
+										<input type="number" name="salesMonths" min="3" max="60" step="1" value="18" />
+									</label>
+									<label>
+										Sales Start Offset (months)
+										<input type="number" name="salesStartOffset" min="0" max="24" step="1" value="0" />
+									</label>
+								</div>
+							</div>
+
+							<label class="toggle-row">
+								<input id="heatmapToggle" type="checkbox" />
+								Enable Sensitivity Heatmap
+							</label>
+
+							<h3>Rate + Costing</h3>
+							<div class="grid-2">
+								<label>
+									Custom Rate (Rs / sq ft)
+									<input type="number" name="customRate" min="0" step="1" value="0" />
+								</label>
+								<label>
+									Cost View
+									<select name="costView">
+										<option value="developer" selected>Developer View</option>
+										<option value="contractor">Contractor View</option>
+									</select>
+								</label>
+							</div>
+							<label>
+								Escalation %
+								<input type="number" name="escalationPct" min="0" max="20" step="0.5" value="5" />
+							</label>
+
+							<h3>Land + Statutory</h3>
+							<div class="grid-3">
+								<label>
+									Land Rate (Rs / sq ft)
+									<input type="number" name="landRate" min="0" step="1" value="5000" />
+								</label>
+								<label>
+									Land Cost Override (Rs)
+									<input type="number" name="landCost" min="0" step="1000" value="0" />
+								</label>
+								<label>
+									Stamp + Reg %
+									<input type="number" name="stampPct" min="0" max="15" step="0.5" value="7" />
+								</label>
+							</div>
+							<label>
+								Legal/Approval Cost (Rs)
+								<input type="number" name="legalCost" min="0" step="1000" value="1000000" />
+							</label>
+							<label>
+								Architect Fee (% of Total Project Cost)
+								<input type="number" name="architectPct" min="0" max="15" step="0.1" value="2.5" />
+							</label>
+
+							<h3>Sales + Finance</h3>
+							<label>
+								Sale Price (Rs / sq ft on SBA)
+								<input id="salePrice" type="range" name="salePrice" min="3000" max="20000" step="100" value="9000" />
+								<span id="salePriceValue" class="inline-value"></span>
+							</label>
+
+							<div class="grid-3">
+								<label>
+									Inventory Sold % (on SBA)
+									<input type="number" name="soldPct" min="0" max="100" step="1" value="85" />
+								</label>
+								<label>
+									GST %
+									<input type="number" name="gstPct" min="0" max="18" step="0.5" value="5" />
+								</label>
+								<label>
+									Broker %
+									<input type="number" name="brokerPct" min="0" max="5" step="0.1" value="2" />
+								</label>
+							</div>
+
+							<div class="grid-3">
+								<label>
+									Loan %
+									<input type="number" name="loanPct" min="0" max="90" step="1" value="60" />
+								</label>
+								<label>
+									Interest %
+									<input type="number" name="interestPct" min="0" max="24" step="0.1" value="12" />
+								</label>
+								<label>
+									Duration (months)
+									<input type="number" name="durationMonths" min="6" max="72" step="1" value="24" />
+								</label>
+							</div>
+
+							<button class="primary" type="submit">Generate Full Analysis</button>
+						</form>
+					</section>
+
+					<section class="output-card">
+						<div class="output-head">
+							<h2>Output</h2>
+							<div class="head-actions">
+								<button type="button" class="ghost" id="copyBtn">Copy Summary</button>
+								<button type="button" class="ghost" id="reportBtn">Investor Report</button>
+								<button type="button" class="ghost" id="printBtn">Print</button>
+							</div>
+						</div>
+
+						<div id="riskPanel" class="risk-panel"></div>
+						<div id="summary" class="summary"></div>
+						<div id="splitBar" class="split-bar"></div>
+						<div id="waterfallPanel" class="waterfall-panel"></div>
+						<div id="scenarioCards" class="scenarios"></div>
+						<div id="cashflowPanel" class="cashflow-panel hidden"></div>
+						<div id="heatmapPanel" class="heatmap-panel hidden"></div>
+
+						<div class="table-wrap">
+							<table>
+								<thead>
+									<tr>
+										<th>Category</th>
+										<th>Item</th>
+										<th>Unit</th>
+										<th>Qty</th>
+										<th>Rate</th>
+										<th>Amount</th>
+									</tr>
+								</thead>
+								<tbody id="boqBody"></tbody>
+								<tfoot>
+									<tr>
+										<td colspan="5">Construction Grand Total</td>
+										<td id="grandTotal">Rs 0</td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+
+						<p class="disclaimer">
+							Disclaimer: This is a strategic planning tool. Always validate against latest municipal approvals, Gujarat RERA disclosures, market rates, and consultant-level structural and MEP design.
+						</p>
+					</section>
+				</div>
+			</section>
+
+			<section id="about" class="info-card container card-shell">
+				<p class="vorco-logo">VORCO</p>
+				<p>
+					VORCO is focused on simplifying construction and development decision-making with practical tools. OptiBuild gives developers a fast, structured view of cost, revenue, and feasibility in one flow.
+				</p>
+			</section>
+		</div>
+
+		<script src="app.js"></script>
+	</body>
+</html>
